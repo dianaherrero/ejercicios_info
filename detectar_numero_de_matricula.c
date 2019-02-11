@@ -9,13 +9,12 @@
 
 
 int leer_num_matr(char* cadena);
-long int imprimir_numero(char* cadena);
+long int imprimir_numero(char* cadena[]);
 
 int main(){
 	long int num=0;
 	char str[]="manuel_87550";
 	leer_num_matr(str);
-	puts(str);
 	num= imprimir_numero(str);
 	printf("El numero es: %ld\n", num);
 }
@@ -24,15 +23,21 @@ int leer_num_matr(char* cadena){
 	puts("Introduzca cadena\n");
 	fflush(stdin);
 	gets(cadena);
+	fflush(stdin);
 }
 
-long int imprimir_numero(char* cadena){
+long int imprimir_numero(char* cadena[]){
 	int i;
 	long int num=0;
 	char* p= cadena;
-	for(;i<50;i++){
-		if(isdigit(*p)){
-			num=strtol(p,NULL, 10);
+	printf("Ha llegado %s\n", cadena);
+	printf("He cogido %s\n", p);
+	for(i=0;i<50;i++){
+		if(isdigit(p[i])){
+			printf("found%c ",p[i]);
+			num=num*10+strtol(p,p, 10);
+			printf("%ld\n", num);
 		}
 	}
+	return num;
 }
