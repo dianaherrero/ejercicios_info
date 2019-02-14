@@ -27,16 +27,18 @@ int leer_num_matr(char* cadena){
 }
 
 long int imprimir_numero(char* cadena[]){
-	int i;
+	int i=0;
 	long int num=0;
 	char* p= cadena;
 	printf("Ha llegado %s\n", cadena);
 	printf("He cogido %s\n", p);
+	//while(i!=49){
 	for(i=0;i<50;i++){
-		if(isdigit(p[i])){
+		if(isdigit(p[i])!=0){
 			printf("found%c ",p[i]);
 			num=num*10+strtol(p,p, 10);
 			printf("%ld\n", num);
+			//i++;
 		}
 	}
 	return num;
