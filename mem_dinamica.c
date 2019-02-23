@@ -5,73 +5,83 @@
 
 struct nodo_t{
 	int dato;
-	nodo_t* siguiente;
+	struct nodo_t* siguiente;
 };
 
-typedef nodo_t nodo;
+typedef struct nodo_t nodo;
 
 //interfaz
 void print(nodo*head);
 nodo* init(int dato);
 void push_back(nodo* head, int dato);
-nodo*push_front(nodo_t** head, int dato);
+nodo*push_front(nodo** head, int dato);
 void clear(nodo* head);
 
 
 //funcion auxiliar
 nodo* nuevo_elemento(){
-	return(nodo*)malloc(sizeof(nodo));
+	nodo* cosa;
+	cosa=(nodo*)malloc(sizeof(nodo));
+	return cosa;
 }
 
 nodo* init(int dato){
+	nodo* head=nuevo_elemento();
+	head->dato = dato;
+	head->siguiente = NULL;
+	return head;	
 }
 
+//variable global head
+//nodo* head=NULL;
 
-nodo* head=NULL;
-
-void print(nodo* head){
-	nodo* actual=head;
-	nodo* pElem;
+//imprime desde donde le mandes hasta que llegue al último que tenga datos
+void print(nodo* cabeza){
+	nodo* actual=cabeza;
 	do{
 		printf("%d ", actual->dato);
 		actual=actual->siguiente;
 	}while(actual!=NULL);
 }
 
-void push_back(nodo* head, int dato){
-	nodo* actual=head;
-	while(actual->siguiente!=NULL){
+void push_back(nodo* cabeza, int dato){
+	nodo* actual=cabeza;
+	nodo* pElem; 
+	while(actual->siguiente!=NULL){	//actualiza el actual hasta que sea el ultimo
 		actual=actual->siguiente;
 	}
-	//tiene que pasar que actual->tail
+	//aquí tienes que tener que actual->tail. Haces un nuevo nodo y metes sus  datos
 	pElem=nuevo_elemento();
 	pElem->dato=dato;
 	pElem->siguiente=NULL;
-	puts(" ");
-	//actual->siguiente=pElem
+	puts("Nodo añadido \n");
+	//haces que el que anteriormente era el ultimo apunte a este nuevo
+	actual->siguiente=pElem;
 }
 
-nodo*push_front(nodo_t** head, int dato){
-	nodo* actual=*head;
-	
+nodo*push_front(nodo** cabeza, int dato){
+	nodo* actual=*cabeza; //lo del ** no es tontería es para poder cambiar la dirección de head (variable global)
+	nodo* pElem;
 	//nuevo
-	nodo* pElem=nuevo_elemento();
+	pElem=nuevo_elemento();
 	pElem->dato=dato;
 	pElem->siguiente=actual;
-	*head=pElem;
+	*cabeza=pElem;
 	
-	return *head;
+	return *cabeza;
 }
 
-//liberar memoria (creo que está aun pendiente)
-void clear(nodo* head){
-	nodo* actual=head;
+//liberar memoria 
+void clear(nodo* cabeza){
+	nodo* actual=cabeza;
 	nodo* siguiente=NULL;
 	
-	while(actual->siguiente!=NULL){
+	do{
 		siguiente=actual->siguiente;
 		free(actual);
+		actual=siguiente;
 	}
+	while(actual->siguiente!=NULL);
 	
 }
 
